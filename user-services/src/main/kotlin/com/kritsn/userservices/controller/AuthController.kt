@@ -1,5 +1,6 @@
 package com.kritsn.userservices.controller
 
+import com.kritsn.lib.base.BaseResponse
 import com.kritsn.lib.base.Response
 import com.kritsn.lib.base.buildSuccessResponse
 import com.kritsn.userservices.dto.ReqUser
@@ -25,17 +26,21 @@ class AuthController {
     lateinit var authService: AuthService
 
     @GetMapping("/dummy")
-    private fun dummyApi(): Response<String> {
-        return buildSuccessResponse()
+    private fun dummyApi(): BaseResponse {
+        return buildSuccessResponse<String>()
     }
 
     @PostMapping("/create", consumes = ["application/json"], produces = ["application/json"])
-    private fun createNewToken(@RequestBody reqUser: ReqUser): Response<String> {
+    private fun createNewToken(@RequestBody reqUser: ReqUser): BaseResponse {
         return authService.handleGenerateToken(reqUser.mobileNumber)
     }
 
     @GetMapping("/refresh")
-    fun refreshToken(@RequestHeader("Authorization") token: String?): Response<String> {
+    fun refreshToken(@RequestHeader("Authorization") token: String?): BaseResponse {
         return authService.handleRefreshToken(token)
+    }
+    @GetMapping("/circuitBreaker")
+    fun refreshToken(): BaseResponse {
+        return authService.handleCircuitBreaker()
     }
 }

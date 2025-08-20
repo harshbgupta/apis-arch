@@ -10,11 +10,12 @@ const val MESSAGE_SUCCESS = "Success"
 const val MESSAGE_FAILED = "Failed"
 const val MESSAGE_SERVER_ERROR = "Server Error"
 
+open class BaseResponse
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-class Response<T> {
+class Response<T>: BaseResponse() {
     var success: Boolean? = null
     var code: Int? = null
     var message: String? = ""
@@ -66,8 +67,8 @@ fun <T> buildErrorResponse(
     return response
 }
 
-fun <T> buildServerErrorResponse(e: Throwable? = null): Response<T> {
-    val response = Response<T>()
+fun  buildServerErrorResponse(e: Throwable? = null): BaseResponse {
+    val response = Response<Any?>()
     response.code = HttpStatus.INTERNAL_SERVER_ERROR.value()
     response.success = false
     response.message = e?.message ?: MESSAGE_SERVER_ERROR

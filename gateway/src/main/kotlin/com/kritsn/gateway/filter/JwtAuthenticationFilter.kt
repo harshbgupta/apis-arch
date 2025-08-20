@@ -25,7 +25,6 @@ class JwtAuthenticationFilter(val jwtUtil: JwtUtil) : OncePerRequestFilter() {
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
 
         val isExcludedPath = PUBLIC_URLS.any { request.servletPath.contains(it) }
-        log.info("➡️➡️➡️➡️➡️➡️➡️➡️ STARTING 2 shouldNotFilter isExcludedPath $isExcludedPath")
         return isExcludedPath
     }
 
@@ -33,7 +32,6 @@ class JwtAuthenticationFilter(val jwtUtil: JwtUtil) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain
     ) {
-        log.info("➡️➡️➡️➡️➡️➡️➡️➡️ STARTING 3 doFilterInternal 1")
         val startTime = System.currentTimeMillis()
         val requestWrapper = ContentCachingRequestWrapper(request)
         val responseWrapper = ContentCachingResponseWrapper(response)
