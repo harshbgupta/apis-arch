@@ -17,7 +17,6 @@ class JwtEntryPoint : AuthenticationEntryPoint {
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        log.info("➡️➡️➡️➡️➡️➡️➡️➡️ STARTING 1.5 in case Exception commence")
         sendErrorResponse(
             response,
             HttpStatus.UNAUTHORIZED,

@@ -24,7 +24,6 @@ class SecurityConfig(
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        log.info("➡️➡️➡️➡️➡️➡️➡️➡️ STARTING 1 securityFilterChain")
         http.csrf { it.disable() }
             .exceptionHandling { it.authenticationEntryPoint(jwtEntryPoint) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

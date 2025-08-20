@@ -1,9 +1,13 @@
 package com.kritsn.userservices.service
 
+import com.kritsn.lib.base.BaseResponse
 import com.kritsn.lib.base.Response
 import com.kritsn.lib.base.buildErrorResponse
+import com.kritsn.lib.base.buildServerErrorResponse
 import com.kritsn.lib.base.buildSuccessResponse
 import com.kritsn.lib.jwt.JwtUtil
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
+import io.github.resilience4j.retry.annotation.Retry
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -20,6 +24,7 @@ class AuthService(@Autowired val jwtUtil: JwtUtil) {
         }
     }
 
+
     fun handleRefreshToken(tokenWithBearer: String?): Response<String> {
         try {
             //Refreshing token
@@ -29,5 +34,16 @@ class AuthService(@Autowired val jwtUtil: JwtUtil) {
             e.printStackTrace()
             return buildErrorResponse(e.message)
         }
+    }
+
+    @CircuitBreaker(name = "circuitBreakerCB", fallbackMethod = "circuitBreakerFallback")
+    @Retry(name = "circuitBreakerRetry")
+    fun handleCircuitBreaker(): BaseResponse {
+        return buildSuccessResponse("Success response for circuit Breaker")
+    }
+
+    // Fallback executed when retries & circuit breaker fail
+    fun circuitBreakerFallback(userId: String, ex: Throwable): BaseResponse {
+        return buildServerErrorResponse(Exception("Fallback response for circuit Breaker"))
     }
 }
