@@ -1,7 +1,19 @@
+# ---------------- Maven ----------------
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# -------- Maven Wrapper (DO NOT IGNORE) --------
+# Keep mvnw, mvnw.cmd, and .mvn/wrapper/** in git
 
 ### IntelliJ IDEA ###
 .idea/
@@ -37,3 +49,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+##log filee
+*log.json*

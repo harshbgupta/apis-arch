@@ -1,4 +1,4 @@
-package com.kritsn.gateway.exception
+package com.kritsn.userservices.exception
 
 
 import com.kritsn.lib.base.buildErrorResponse
@@ -64,18 +64,9 @@ class GlobalExceptionHandler {
         return ResponseEntity(response, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(org.springframework.security.access.AuthorizationServiceException::class)
-    fun handleAuthorizationServiceException(ex: org.springframework.security.access.AuthorizationServiceException): ResponseEntity<Any> {
-        ex.printStackTrace()
-        val response = buildErrorResponse(
-            message = "Authorization error => ${ex::class.java.simpleName}: ${ex.message}",
-            httpStatus = HttpStatus.FORBIDDEN,
-        )
-        return ResponseEntity(response, HttpStatus.FORBIDDEN)
-    }
 
-    @ExceptionHandler(org.springframework.security.access.AccessDeniedException::class)
-    fun handleAccessDeniedException(ex: org.springframework.security.access.AccessDeniedException): ResponseEntity<Any> {
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDeniedException(ex: AccessDeniedException): ResponseEntity<Any> {
         ex.printStackTrace()
         val response = buildErrorResponse(
             message = "Access denied => ${ex::class.java.simpleName}: ${ex.message}",

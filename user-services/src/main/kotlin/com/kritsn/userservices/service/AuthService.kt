@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 @Service
 class AuthService(@Autowired val jwtUtil: JwtUtil) {
 
-    fun handleGenerateToken(mobileNumber: String): Response<String> {
+    fun handleGenerateToken(mobileNumber: String): BaseResponse {
         try {
             val jwtToken = jwtUtil.generateToken(mobileNumber)
             return buildSuccessResponse(jwtToken)
@@ -25,7 +25,7 @@ class AuthService(@Autowired val jwtUtil: JwtUtil) {
     }
 
 
-    fun handleRefreshToken(tokenWithBearer: String?): Response<String> {
+    fun handleRefreshToken(tokenWithBearer: String?): BaseResponse {
         try {
             //Refreshing token
             val refreshedJwtToken = jwtUtil.refreshToken(tokenWithBearer)

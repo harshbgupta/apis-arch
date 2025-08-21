@@ -27,7 +27,7 @@ class AuthController {
 
     @GetMapping("/dummy")
     private fun dummyApi(): BaseResponse {
-        return buildSuccessResponse<String>()
+        return buildSuccessResponse()
     }
 
     @PostMapping("/create", consumes = ["application/json"], produces = ["application/json"])
